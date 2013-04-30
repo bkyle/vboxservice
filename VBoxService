@@ -1,0 +1,50 @@
+#!/bin/sh
+
+NAME=$1
+
+if [ "$NAME" == "" ]; then
+  echo "usage: `basename $0` name"
+	exit 1
+fi
+
+VBOXMANAGE=/usr/bin/VBoxManage
+
+echo "Starting $NAME"
+$VBOXMANAGE startvm $NAME --type headless
+if [ ! "$?" == "0" ]; then
+	echo "VM failed to start"
+	exit 1
+fi
+
+cleanup ()
+{
+	echo "Stopping $NAME"
+	$VBOXMANAGE controlvm $NAME acpipowerbutton
+	echo "ACPI power down initiated"
+
+	# We'll wait 5 minutes for the VM to gracefully come down
+	TIMEOUT=$(date -v +5M +%s)
+
+	# Wait for the VM to die
+	while [ true ]; do
+		$VBOXMANAGE list runningvms | grep $NAME > /dev/null
+		if [ "$?" -gt "0" ]; then
+			break
+		fi
+
+		if [ "$(date +%s)" -gt $TIMEOUT ]; then
+			echo "VM failed to respond to ACPI shutdown"
+			echo "VM will be forcefully shutdown"
+			$VBOXMANAGE controlvm $NAME poweroff
+			break
+		fi
+	done
+
+	echo "Shutdown complete"
+}
+
+trap cleanup EXIT
+
+while [ true ]; do
+	sleep 1000
+done
