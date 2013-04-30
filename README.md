@@ -8,28 +8,28 @@ Usage: VBoxService [name]
 Example launchd plist
 =====================
 
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>Label</key>
-	<string>vbox.myvm</string>
-	<key>Program</key>
-	<string>/usr/bin/VBoxService</string>
-	<key>ProgramArguments</key>
-	<array>
-		<string>/usr/bin/VBoxService</string>
-		<string>myvm</string>
-	</array>
-	<key>KeepAlive</key>
-	<true/>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>StandardErrorPath</key>
-  <string>/tmp/vbox.myvm.err</string>
-  <key>StandardOutPath</key>
-  <string>/tmp/vbox.myvm.out</string>
-</dict>
-</plist>
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+      <key>Label</key>
+      <string>vbox.myvm</string>
+      <key>Program</key>
+      <string>/usr/bin/VBoxService</string>
+      <key>ProgramArguments</key>
+      <array>
+        <string>/usr/bin/VBoxService</string>
+        <string>myvm</string>
+      </array>
+      <key>KeepAlive</key>
+      <true/>
+      <key>RunAtLoad</key>
+      <true/>
+      <key>StandardErrorPath</key>
+      <string>/tmp/vbox.myvm.err</string>
+      <key>StandardOutPath</key>
+      <string>/tmp/vbox.myvm.out</string>
+    </dict>
+    </plist>
 
 
